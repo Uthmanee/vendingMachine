@@ -1,0 +1,265 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.math_real.all;
+
+
+entity VendingMachine is
+    port (
+        clk50: in  std_logic;
+        x  : in  std_logic;
+        y  : in  std_logic;
+        SW : in  std_logic_vector(9 downto 0);
+        -- cntrr: out integer;
+        LEDR : out std_logic_vector(9 downto 0);
+        HEX0 : out std_logic_vector(7 downto 0);
+        HEX1 : out std_logic_vector(7 downto 0);
+        HEX2 : out std_logic_vector(7 downto 0);
+        HEX3 : out std_logic_vector(7 downto 0);
+        HEX4 : out std_logic_vector(7 downto 0);
+        HEX5 : out std_logic_vector(7 downto 0)
+    );
+end VendingMachine;
+
+architecture ctrller of VendingMachine is
+    type State_Type is (idle, cash, disp, change);
+    signal pres_state, next_state : State_Type := idle;
+    signal reset : std_logic;
+    -- For creating 1 Hz Clock 
+    constant clkFreq : integer := 50000000;
+    signal   cntrclk : integer := 0;
+    signal   clk     : std_logic := '0';
+    -- Signal used as a counter to determine how long each state lasts for
+    constant maxCntr : integer := 5;
+    signal   cntr    : integer range 0 to maxCntr := 0;
+
+    constant minCost : integer := 20;
+    constant maxCost : integer := 50;
+
+    -- Define constants for displaying specific things on the HEX displays with no DP
+    constant zero  : std_logic_vector(7 downto 0) := "11000000";
+    constant one   : std_logic_vector(7 downto 0) := "11111001";
+    constant two   : std_logic_vector(7 downto 0) := "10100100";
+    constant three : std_logic_vector(7 downto 0) := "10110000";
+    constant four  : std_logic_vector(7 downto 0) := "10011001";
+    constant five  : std_logic_vector(7 downto 0) := "10010010";
+    constant six   : std_logic_vector(7 downto 0) := "10000010";
+    constant seven : std_logic_vector(7 downto 0) := "11111000";
+    constant eight : std_logic_vector(7 downto 0) := "10000000";
+    constant nine  : std_logic_vector(7 downto 0) := "10011000";
+    constant A     : std_logic_vector(7 downto 0) := "10001000";
+    constant b     : std_logic_vector(7 downto 0) := "10000011";
+  --constant c     : std_logic_vector(7 downto 0) := "10100111";
+    constant c     : std_logic_vector(7 downto 0) := "11000110";
+    constant d     : std_logic_vector(7 downto 0) := "10100001";
+    constant e     : std_logic_vector(7 downto 0) := "10000100";
+    constant F     : std_logic_vector(7 downto 0) := "10001110";
+    constant g     : std_logic_vector(7 downto 0) := "10010000";
+    constant h     : std_logic_vector(7 downto 0) := "10001011";
+    constant J     : std_logic_vector(7 downto 0) := "11100001";
+    constant L     : std_logic_vector(7 downto 0) := "11000111";
+    constant n     : std_logic_vector(7 downto 0) := "10101011";
+    constant o     : std_logic_vector(7 downto 0) := "10100011";
+    constant P     : std_logic_vector(7 downto 0) := "10001100";
+    constant r     : std_logic_vector(7 downto 0) := "10101111";
+    constant S     : std_logic_vector(7 downto 0) := "10010010";
+    constant t     : std_logic_vector(7 downto 0) := "10000111";
+    constant u     : std_logic_vector(7 downto 0) := "11100011";
+  --  constant y     : std_logic_vector(7 downto 0) := "10010001";
+    constant z     : std_logic_vector(7 downto 0) := "10100100";
+    constant dash  : std_logic_vector(7 downto 0) := "10111111";
+    constant upc_E : std_logic_vector(7 downto 0) := "10000110";
+    constant rev_E : std_logic_vector(7 downto 0) := "10110000";
+    constant rev_r : std_logic_vector(7 downto 0) := "10111011";
+    constant blank : std_logic_vector(7 downto 0) := "11111111";
+    -- Define vectors for HEX displays for each light config
+    -- INIT
+    constant hex5_init  : std_logic_vector(7 downto 0) := blank;
+    constant hex4_init  : std_logic_vector(7 downto 0) := one;
+    constant hex3_init  : std_logic_vector(7 downto 0) := n;
+    constant hex2_init  : std_logic_vector(7 downto 0) := one;
+    constant hex1_init  : std_logic_vector(7 downto 0) := t;
+    constant hex0_init  : std_logic_vector(7 downto 0) := blank;
+
+    -- IDLE
+    constant hex5_idle  : std_logic_vector(7 downto 0) := blank;
+    constant hex4_idle  : std_logic_vector(7 downto 0) := one;
+    constant hex3_idle  : std_logic_vector(7 downto 0) := d;
+    constant hex2_idle  : std_logic_vector(7 downto 0) := L;
+    constant hex1_idle  : std_logic_vector(7 downto 0) := e;
+    constant hex0_idle  : std_logic_vector(7 downto 0) := blank;
+
+    -- CASH
+    constant hex5_cash : std_logic_vector(7 downto 0) := blank;
+    constant hex4_cash : std_logic_vector(7 downto 0) := c;
+    constant hex3_cash : std_logic_vector(7 downto 0) := A;
+    constant hex2_cash : std_logic_vector(7 downto 0) := S;
+    constant hex1_cash : std_logic_vector(7 downto 0) := h;
+    constant hex0_cash : std_logic_vector(7 downto 0) := blank;
+    -- DISP
+    constant hex5_disp : std_logic_vector(7 downto 0) := blank;
+    constant hex4_disp : std_logic_vector(7 downto 0) := d;
+    constant hex3_disp : std_logic_vector(7 downto 0) := one;
+    constant hex2_disp : std_logic_vector(7 downto 0) := s;
+    constant hex1_disp : std_logic_vector(7 downto 0) := p;
+    constant hex0_disp : std_logic_vector(7 downto 0) := blank;
+    -- CHANGE
+    constant hex5_change : std_logic_vector(7 downto 0) := C;
+    constant hex4_change : std_logic_vector(7 downto 0) := h;
+    constant hex3_change : std_logic_vector(7 downto 0) := A;
+    constant hex2_change : std_logic_vector(7 downto 0) := n;
+    constant hex1_change : std_logic_vector(7 downto 0) := g;
+    constant hex0_change : std_logic_vector(7 downto 0) := e;
+
+begin
+    reset <= SW(0);
+
+    ------------------- getting 1 HZ clock from the bard
+    clock_division : process(clk50)
+    begin
+        if rising_edge(clk50) then
+            if cntrclk < integer(clkFreq/2) then
+                cntrclk <= cntrclk + 1;
+            else
+                clk     <= not clk;
+                cntrclk <= 0;
+            end if;
+        end if;
+    end process;
+
+    ------------------- state control
+    state_control : process (clk, x, y, reset)
+    begin
+        if (reset = '1') then
+            LEDR(0) <= '1';
+            pres_state <= idle;
+        elsif (rising_edge(clk) or (x='0' or y='0')) then
+				LEDR(0) <= '0';
+            pres_state <= next_state;
+        end if;
+    end process;
+
+    next_state_logic : process (pres_state, x, y)
+-- Variable used to monitor customer's balance in the vending machine
+    variable   balance  : integer := 0;
+    variable deposit  : integer := 0;
+
+    begin
+        -- if rising_edge(clk) then
+        --     case (pres_state) is               
+        --         when idle =>
+        --             next_state <= cash;
+        --         when cash =>
+        --             next_state <= disp;   
+        --         when disp =>
+        --             next_state <= change;
+        --         when change =>
+        --             next_state <= idle;
+        --         when others => 
+        --             next_state <= idle;
+        --     end case;
+        -- end if;
+
+        next_state <= idle;
+
+            case (pres_state) is               
+                when idle =>
+                    deposit := 0;
+                    balance := 0;
+                    if (x = '0') then
+                        next_state <= cash;
+                    elsif (y = '0') then
+                        next_state <= idle;
+                    end if;
+                when cash =>
+                -- When input cash is less than minimumCost, next_state <=  cash
+                    if (balance  < minCost) then
+                        if (x = '0') then
+                            deposit := 5;
+                            balance := balance + deposit;
+                        elsif (y = '0') then
+                            deposit := 10;
+                            balance := balance + deposit;
+                        end if;
+                    elsif (balance > minCost and balance < maxCost) then
+                        if (x = '0') then
+                            next_state <= disp;
+                        elsif (y='0') then
+                            deposit := 10;
+                            balance := balance + deposit;                            
+                        end if;
+                    elsif (balance >= maxCost) then
+                        if (x = '0' or y='0') then
+                            next_state <= disp;                          
+                        end if;
+                    end if;
+                -- When input cash >= minimuCost next_state <= dispense
+                    -- if (x = '0') then
+                    --     bal <= bal + 5;
+                    -- elsif (y = '0') then
+                    --     bal <= bal + 10;
+                    -- end if;
+
+                    -- if bal >= minCost then
+                        next_state <= disp;   
+                    -- else
+                    --     next_state <= cash;
+                    -- end if;
+                when disp =>
+                        next_state <= change;
+                when change =>
+                        next_state <= idle;
+                when others => 
+                    next_state <= idle;
+            end case;
+    end process;
+
+    output_logic : process (pres_state)
+    begin
+        case (pres_state) is
+            -- when init =>
+            --     HEX5 <= hex5_init;
+            --     HEX4 <= hex4_init;
+            --     HEX3 <= hex3_init;
+            --     HEX2 <= hex2_init;
+            --     HEX1 <= hex1_init;
+            --     HEX0 <= hex0_init;
+            when idle => 
+                HEX5 <= hex5_idle;
+                HEX4 <= hex4_idle;
+                HEX3 <= hex3_idle;
+                HEX2 <= hex2_idle;
+                HEX1 <= hex1_idle;
+                HEX0 <= hex0_idle;
+            when cash =>
+                HEX5 <= hex5_cash;
+                HEX4 <= hex4_cash;
+                HEX3 <= hex3_cash;
+                HEX2 <= hex2_cash;
+                HEX1 <= hex1_cash;
+                HEX0 <= hex0_cash;
+            when disp =>
+                HEX5 <= hex5_disp;
+                HEX4 <= hex4_disp;
+                HEX3 <= hex3_disp;
+                HEX2 <= hex2_disp;
+                HEX1 <= hex1_disp;
+                HEX0 <= hex0_disp;	
+            when change =>
+                HEX5 <= hex5_change;
+                HEX4 <= hex4_change;
+                HEX3 <= hex3_change;
+                HEX2 <= hex2_change;
+                HEX1 <= hex1_change;
+                HEX0 <= hex0_change;
+            when others => 
+                HEX5 <= hex5_idle;
+                HEX4 <= hex4_idle;
+                HEX3 <= hex3_idle;
+                HEX2 <= hex2_idle;
+                HEX1 <= hex1_idle;
+                HEX0 <= hex0_idle;
+        end case;
+    end process;
+    -- Cntrr <= cntr;
+end architecture ctrller;

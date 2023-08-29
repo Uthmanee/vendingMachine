@@ -1,0 +1,418 @@
+Analysis & Synthesis report for VendingMachine
+Tue Aug 29 04:09:27 2023
+Quartus Prime Version 22.1std.1 Build 917 02/14/2023 SC Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. State Machine - |VendingMachine|next_state
+  9. State Machine - |VendingMachine|pres_state
+ 10. Registers Removed During Synthesis
+ 11. General Register Statistics
+ 12. Inverted Register Statistics
+ 13. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 14. Post-Synthesis Netlist Statistics for Top Partition
+ 15. Elapsed Time Per Partition
+ 16. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2023  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++-------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                        ;
++------------------------------------+------------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Tue Aug 29 04:09:27 2023          ;
+; Quartus Prime Version              ; 22.1std.1 Build 917 02/14/2023 SC Lite Edition ;
+; Revision Name                      ; VendingMachine                                 ;
+; Top-level Entity Name              ; VendingMachine                                 ;
+; Family                             ; MAX 10                                         ;
+; Total logic elements               ; 386                                            ;
+;     Total combinational functions  ; 373                                            ;
+;     Dedicated logic registers      ; 105                                            ;
+; Total registers                    ; 105                                            ;
+; Total pins                         ; 69                                             ;
+; Total virtual pins                 ; 0                                              ;
+; Total memory bits                  ; 0                                              ;
+; Embedded Multiplier 9-bit elements ; 0                                              ;
+; Total PLLs                         ; 0                                              ;
+; UFM blocks                         ; 0                                              ;
+; ADC blocks                         ; 0                                              ;
++------------------------------------+------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                              ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                           ; Setting            ; Default Value      ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                           ; 10M50DAF484C7G     ;                    ;
+; Top-level entity name                                            ; VendingMachine     ; VendingMachine     ;
+; Family name                                                      ; MAX 10             ; Cyclone V          ;
+; Use smart compilation                                            ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                      ; Off                ; Off                ;
+; Restructure Multiplexers                                         ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                              ; Off                ; Off                ;
+; Preserve fewer node names                                        ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable             ; Enable             ;
+; Verilog Version                                                  ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                     ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                         ; Auto               ; Auto               ;
+; Safe State Machine                                               ; Off                ; Off                ;
+; Extract Verilog State Machines                                   ; On                 ; On                 ;
+; Extract VHDL State Machines                                      ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                       ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                   ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                        ; On                 ; On                 ;
+; Parallel Synthesis                                               ; On                 ; On                 ;
+; DSP Block Balancing                                              ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                               ; On                 ; On                 ;
+; Power-Up Don't Care                                              ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                     ; Off                ; Off                ;
+; Remove Duplicate Registers                                       ; On                 ; On                 ;
+; Ignore CARRY Buffers                                             ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                           ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                            ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                ; Off                ;
+; Ignore LCELL Buffers                                             ; Off                ; Off                ;
+; Ignore SOFT Buffers                                              ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                ; Off                ;
+; Optimization Technique                                           ; Balanced           ; Balanced           ;
+; Carry Chain Length                                               ; 70                 ; 70                 ;
+; Auto Carry Chains                                                ; On                 ; On                 ;
+; Auto Open-Drain Pins                                             ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                ; Off                ;
+; Auto ROM Replacement                                             ; On                 ; On                 ;
+; Auto RAM Replacement                                             ; On                 ; On                 ;
+; Auto DSP Block Replacement                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                  ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                    ; On                 ; On                 ;
+; Strict RAM Replacement                                           ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                           ; Off                ; Off                ;
+; Auto RAM Block Balancing                                         ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                ; Off                ; Off                ;
+; Auto Resource Sharing                                            ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                    ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing              ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                ; Off                ; Off                ;
+; Timing-Driven Synthesis                                          ; On                 ; On                 ;
+; Report Parameter Settings                                        ; On                 ; On                 ;
+; Report Source Assignments                                        ; On                 ; On                 ;
+; Report Connectivity Checks                                       ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                ; Off                ;
+; Synchronization Register Chain Length                            ; 2                  ; 2                  ;
+; Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                  ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                ; 100                ;
+; Clock MUX Protection                                             ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                      ; Off                ; Off                ;
+; Block Design Naming                                              ; Auto               ; Auto               ;
+; SDC constraint protection                                        ; Off                ; Off                ;
+; Synthesis Effort                                                 ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                               ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                      ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                           ; On                 ; On                 ;
++------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 2           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.0%      ;
++----------------------------+-------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                              ;
++----------------------------------+-----------------+-----------------------+------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type             ; File Name with Absolute Path                                                 ; Library ;
++----------------------------------+-----------------+-----------------------+------------------------------------------------------------------------------+---------+
+; vendingmachine.vhd               ; yes             ; Auto-Found VHDL File  ; C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd ;         ;
++----------------------------------+-----------------+-----------------------+------------------------------------------------------------------------------+---------+
+
+
++---------------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                         ;
++---------------------------------------------+-----------------------+
+; Resource                                    ; Usage                 ;
++---------------------------------------------+-----------------------+
+; Estimated Total logic elements              ; 386                   ;
+;                                             ;                       ;
+; Total combinational functions               ; 373                   ;
+; Logic element usage by number of LUT inputs ;                       ;
+;     -- 4 input functions                    ; 190                   ;
+;     -- 3 input functions                    ; 40                    ;
+;     -- <=2 input functions                  ; 143                   ;
+;                                             ;                       ;
+; Logic elements by mode                      ;                       ;
+;     -- normal mode                          ; 251                   ;
+;     -- arithmetic mode                      ; 122                   ;
+;                                             ;                       ;
+; Total registers                             ; 105                   ;
+;     -- Dedicated logic registers            ; 105                   ;
+;     -- I/O registers                        ; 0                     ;
+;                                             ;                       ;
+; I/O pins                                    ; 69                    ;
+;                                             ;                       ;
+; Embedded Multiplier 9-bit elements          ; 0                     ;
+;                                             ;                       ;
+; Maximum fan-out node                        ; pres_state.drinkInput ;
+; Maximum fan-out                             ; 75                    ;
+; Total fan-out                               ; 1602                  ;
+; Average fan-out                             ; 2.60                  ;
++---------------------------------------------+-----------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                   ;
++----------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------+----------------+--------------+
+; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; UFM Blocks ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; ADC blocks ; Full Hierarchy Name ; Entity Name    ; Library Name ;
++----------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------+----------------+--------------+
+; |VendingMachine            ; 373 (373)           ; 105 (105)                 ; 0           ; 0          ; 0            ; 0       ; 0         ; 69   ; 0            ; 0          ; |VendingMachine     ; VendingMachine ; work         ;
++----------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------+----------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |VendingMachine|next_state                                                                                                                                                                                                                                    ;
++---------------------------+---------------------------+-------------------+-----------------------+-------------------+-----------------+-----------------+----------------------+-------------------+------------------+-----------------+-----------------+-----------------+
+; Name                      ; next_state.displayBalance ; next_state.change ; next_state.drinkInput ; next_state.sprite ; next_state.cola ; next_state.disp ; next_state.cashInput ; next_state.cash10 ; next_state.cash5 ; next_state.cash ; next_state.init ; next_state.idle ;
++---------------------------+---------------------------+-------------------+-----------------------+-------------------+-----------------+-----------------+----------------------+-------------------+------------------+-----------------+-----------------+-----------------+
+; next_state.idle           ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 0               ;
+; next_state.init           ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 1               ; 1               ;
+; next_state.cash           ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 1               ; 0               ; 1               ;
+; next_state.cash5          ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 1                ; 0               ; 0               ; 1               ;
+; next_state.cash10         ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 1                 ; 0                ; 0               ; 0               ; 1               ;
+; next_state.cashInput      ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 1                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; next_state.disp           ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 1               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; next_state.cola           ; 0                         ; 0                 ; 0                     ; 0                 ; 1               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; next_state.sprite         ; 0                         ; 0                 ; 0                     ; 1                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; next_state.drinkInput     ; 0                         ; 0                 ; 1                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; next_state.change         ; 0                         ; 1                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; next_state.displayBalance ; 1                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
++---------------------------+---------------------------+-------------------+-----------------------+-------------------+-----------------+-----------------+----------------------+-------------------+------------------+-----------------+-----------------+-----------------+
+
+
+Encoding Type:  One-Hot
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |VendingMachine|pres_state                                                                                                                                                                                                                                    ;
++---------------------------+---------------------------+-------------------+-----------------------+-------------------+-----------------+-----------------+----------------------+-------------------+------------------+-----------------+-----------------+-----------------+
+; Name                      ; pres_state.displayBalance ; pres_state.change ; pres_state.drinkInput ; pres_state.sprite ; pres_state.cola ; pres_state.disp ; pres_state.cashInput ; pres_state.cash10 ; pres_state.cash5 ; pres_state.cash ; pres_state.init ; pres_state.idle ;
++---------------------------+---------------------------+-------------------+-----------------------+-------------------+-----------------+-----------------+----------------------+-------------------+------------------+-----------------+-----------------+-----------------+
+; pres_state.idle           ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 0               ;
+; pres_state.init           ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 1               ; 1               ;
+; pres_state.cash           ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 1               ; 0               ; 1               ;
+; pres_state.cash5          ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 1                ; 0               ; 0               ; 1               ;
+; pres_state.cash10         ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 1                 ; 0                ; 0               ; 0               ; 1               ;
+; pres_state.cashInput      ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 1                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; pres_state.disp           ; 0                         ; 0                 ; 0                     ; 0                 ; 0               ; 1               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; pres_state.cola           ; 0                         ; 0                 ; 0                     ; 0                 ; 1               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; pres_state.sprite         ; 0                         ; 0                 ; 0                     ; 1                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; pres_state.drinkInput     ; 0                         ; 0                 ; 1                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; pres_state.change         ; 0                         ; 1                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
+; pres_state.displayBalance ; 1                         ; 0                 ; 0                     ; 0                 ; 0               ; 0               ; 0                    ; 0                 ; 0                ; 0               ; 0               ; 1               ;
++---------------------------+---------------------------+-------------------+-----------------------+-------------------+-----------------+-----------------+----------------------+-------------------+------------------+-----------------+-----------------+-----------------+
+
+
++---------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                              ;
++----------------------------------------+----------------------------------------+
+; Register name                          ; Reason for Removal                     ;
++----------------------------------------+----------------------------------------+
+; deposit[4..31]                         ; Stuck at GND due to stuck port data_in ;
+; hex0_displayBalance[7]                 ; Stuck at VCC due to stuck port data_in ;
+; hex1_displayBalance[7]                 ; Stuck at VCC due to stuck port data_in ;
+; hex2_displayBalance[0..7]              ; Stuck at VCC due to stuck port data_in ;
+; hex3_displayBalance[0..7]              ; Stuck at VCC due to stuck port data_in ;
+; hex4_displayBalance[0..7]              ; Stuck at VCC due to stuck port data_in ;
+; hex5_displayBalance[0..7]              ; Stuck at VCC due to stuck port data_in ;
+; hex0_displayBalance[2,3,5]             ; Merged with hex0_displayBalance[0]     ;
+; hex0_displayBalance[4]                 ; Merged with hex0_displayBalance[1]     ;
+; hex1_displayBalance[3]                 ; Merged with hex1_displayBalance[0]     ;
+; deposit[3]                             ; Merged with deposit[1]                 ;
+; deposit[2]                             ; Merged with deposit[0]                 ;
+; Total Number of Removed Registers = 69 ;                                        ;
++----------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 105   ;
+; Number of registers using Synchronous Clear  ; 45    ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 15    ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 58    ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------+
+; Inverted Register Statistics                     ;
++----------------------------------------+---------+
+; Inverted Register                      ; Fan out ;
++----------------------------------------+---------+
+; LEDR[0]~reg0                           ; 1       ;
+; LEDR[1]~reg0                           ; 2       ;
+; LEDR[2]~reg0                           ; 2       ;
+; Total number of inverted registers = 3 ;         ;
++----------------------------------------+---------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                       ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output             ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
+; 7:1                ; 2 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |VendingMachine|hex0_displayBalance[0] ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |VendingMachine|balance[0]             ;
+; 8:1                ; 30 bits   ; 150 LEs       ; 60 LEs               ; 90 LEs                 ; Yes        ; |VendingMachine|balance[30]            ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |VendingMachine|cntr[0]                ;
+; 12:1               ; 2 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |VendingMachine|hex1_displayBalance[4] ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 69                          ;
+; cycloneiii_ff         ; 105                         ;
+;     CLR               ; 2                           ;
+;     ENA               ; 43                          ;
+;     ENA CLR           ; 13                          ;
+;     ENA SCLR          ; 2                           ;
+;     SCLR              ; 43                          ;
+;     plain             ; 2                           ;
+; cycloneiii_lcell_comb ; 389                         ;
+;     arith             ; 122                         ;
+;         2 data inputs ; 118                         ;
+;         3 data inputs ; 4                           ;
+;     normal            ; 267                         ;
+;         0 data inputs ; 2                           ;
+;         1 data inputs ; 18                          ;
+;         2 data inputs ; 21                          ;
+;         3 data inputs ; 36                          ;
+;         4 data inputs ; 190                         ;
+;                       ;                             ;
+; Max LUT depth         ; 9.00                        ;
+; Average LUT depth     ; 4.58                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:05     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 22.1std.1 Build 917 02/14/2023 SC Lite Edition
+    Info: Processing started: Tue Aug 29 04:08:50 2023
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off VendingMachine -c VendingMachine
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
+Warning (12125): Using design file vendingmachine.vhd, which is not specified as a design file for the current project, but contains definitions for 2 design units and 1 entities in project
+    Info (12022): Found design unit 1: VendingMachine-ctrller File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 21
+    Info (12023): Found entity 1: VendingMachine File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 7
+Info (12127): Elaborating entity "VendingMachine" for the top level hierarchy
+Warning (10873): Using initial value X (don't care) for net "LEDR[9..3]" at vendingmachine.vhd(11) File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 11
+Info (13000): Registers with preset signals will power-up high File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 204
+Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "LEDR[3]" is stuck at GND File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 11
+    Warning (13410): Pin "LEDR[4]" is stuck at GND File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 11
+    Warning (13410): Pin "LEDR[5]" is stuck at GND File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 11
+    Warning (13410): Pin "LEDR[6]" is stuck at GND File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 11
+    Warning (13410): Pin "LEDR[7]" is stuck at GND File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 11
+    Warning (13410): Pin "LEDR[8]" is stuck at GND File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 11
+    Warning (13410): Pin "LEDR[9]" is stuck at GND File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 11
+    Warning (13410): Pin "HEX0[7]" is stuck at VCC File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 12
+    Warning (13410): Pin "HEX1[7]" is stuck at VCC File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 13
+    Warning (13410): Pin "HEX2[7]" is stuck at VCC File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 14
+    Warning (13410): Pin "HEX3[7]" is stuck at VCC File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 15
+    Warning (13410): Pin "HEX4[7]" is stuck at VCC File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 16
+    Warning (13410): Pin "HEX5[1]" is stuck at VCC File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 17
+    Warning (13410): Pin "HEX5[7]" is stuck at VCC File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 17
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 7 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "SW[3]" File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 10
+    Warning (15610): No output dependent on input pin "SW[4]" File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 10
+    Warning (15610): No output dependent on input pin "SW[5]" File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 10
+    Warning (15610): No output dependent on input pin "SW[6]" File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 10
+    Warning (15610): No output dependent on input pin "SW[7]" File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 10
+    Warning (15610): No output dependent on input pin "SW[8]" File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 10
+    Warning (15610): No output dependent on input pin "SW[9]" File: C:/Users/Uthman/Downloads/Vending_Machine/Vending_Machine/vendingmachine.vhd Line: 10
+Info (21057): Implemented 455 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 11 input pins
+    Info (21059): Implemented 58 output pins
+    Info (21061): Implemented 386 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 26 warnings
+    Info: Peak virtual memory: 4804 megabytes
+    Info: Processing ended: Tue Aug 29 04:09:27 2023
+    Info: Elapsed time: 00:00:37
+    Info: Total CPU time (on all processors): 00:00:42
+
+

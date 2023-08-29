@@ -1,0 +1,30 @@
+
+State Machine - |VendingMachine|next_state
+Name next_state.displayBalance next_state.change next_state.drinkInput next_state.sprite next_state.cola next_state.disp next_state.cashInput next_state.cash10 next_state.cash5 next_state.cash next_state.init next_state.idle 
+next_state.idle 0 0 0 0 0 0 0 0 0 0 0 0 
+next_state.init 0 0 0 0 0 0 0 0 0 0 1 1 
+next_state.cash 0 0 0 0 0 0 0 0 0 1 0 1 
+next_state.cash5 0 0 0 0 0 0 0 0 1 0 0 1 
+next_state.cash10 0 0 0 0 0 0 0 1 0 0 0 1 
+next_state.cashInput 0 0 0 0 0 0 1 0 0 0 0 1 
+next_state.disp 0 0 0 0 0 1 0 0 0 0 0 1 
+next_state.cola 0 0 0 0 1 0 0 0 0 0 0 1 
+next_state.sprite 0 0 0 1 0 0 0 0 0 0 0 1 
+next_state.drinkInput 0 0 1 0 0 0 0 0 0 0 0 1 
+next_state.change 0 1 0 0 0 0 0 0 0 0 0 1 
+next_state.displayBalance 1 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |VendingMachine|pres_state
+Name pres_state.displayBalance pres_state.change pres_state.drinkInput pres_state.sprite pres_state.cola pres_state.disp pres_state.cashInput pres_state.cash10 pres_state.cash5 pres_state.cash pres_state.init pres_state.idle 
+pres_state.idle 0 0 0 0 0 0 0 0 0 0 0 0 
+pres_state.init 0 0 0 0 0 0 0 0 0 0 1 1 
+pres_state.cash 0 0 0 0 0 0 0 0 0 1 0 1 
+pres_state.cash5 0 0 0 0 0 0 0 0 1 0 0 1 
+pres_state.cash10 0 0 0 0 0 0 0 1 0 0 0 1 
+pres_state.cashInput 0 0 0 0 0 0 1 0 0 0 0 1 
+pres_state.disp 0 0 0 0 0 1 0 0 0 0 0 1 
+pres_state.cola 0 0 0 0 1 0 0 0 0 0 0 1 
+pres_state.sprite 0 0 0 1 0 0 0 0 0 0 0 1 
+pres_state.drinkInput 0 0 1 0 0 0 0 0 0 0 0 1 
+pres_state.change 0 1 0 0 0 0 0 0 0 0 0 1 
+pres_state.displayBalance 1 0 0 0 0 0 0 0 0 0 0 1 
